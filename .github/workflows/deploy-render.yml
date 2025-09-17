@@ -1,0 +1,19 @@
+name: Deploy a Render (al crear tag)
+
+on:
+  push:
+    tags: [ "v*" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disparar Deploy Hook de Render
+        run: |
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+# Variante por rama:
+# on:
+#   push:
+#     branches: [ "main" ]  # cambia por tu rama productiva
